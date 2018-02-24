@@ -18,7 +18,11 @@ cd $tmp_dir
 
 # 安装libevent
 function install_libevent() {
+    if [ -f libevent.tar.gz ]; then
+        echo "libevent already downloaded"    
+    else
     wget https://github.com/libevent/libevent/releases/download/release-$libevent_version-stable/libevent-$libevent_version-stable.tar.gz -O libevent.tar.gz
+    fi
     tar xzvf libevent.tar.gz
     cd libevent-$libevent_version-stable/
     ./configure --prefix=$install_path
@@ -30,7 +34,11 @@ function install_libevent() {
 
 # 安装tmux
 function install_tmux() {
-    wget https://github.com/tmux/tmux/releases/download/$tmux_version/tmux-$tmux_version.tar.gz -O tmux.tar.gz
+    if [ -f tmux.tar.gz ]; then
+        echo "tmux already downloaded"
+    else
+        wget https://github.com/tmux/tmux/releases/download/$tmux_version/tmux-$tmux_version.tar.gz -O tmux.tar.gz
+    fi
     tar xzvf tmux.tar.gz
     cd tmux-$tmux_version
     CFLAGS="-I$install_path/include" LDFLAGS="-L$install_path/lib" ./configure --prefix=$install_path
